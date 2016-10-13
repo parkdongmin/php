@@ -1,0 +1,19 @@
+img{
+  width: 100%;
+}
+/*
+body{
+  padding-top: 70px;
+}*/
+
+.nav-stacked{
+  position: absolute;
+  padding-left: 30px;
+}
+
+@media(max-width:1355px;) {
+    .nav-stacked{
+      position: static;;
+    }
+
+}
