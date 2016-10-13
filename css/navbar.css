@@ -7,13 +7,6 @@ body{
 }*/
 
 .nav-stacked{
-  position: absolute;
+  float: left;
   padding-left: 30px;
-}
-
-@media(max-width:1355px;) {
-    .nav-stacked{
-      position: static;;
-    }
-
 }
