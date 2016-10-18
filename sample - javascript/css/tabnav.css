@@ -18,3 +18,7 @@ div.circle{
   border: 1px solid rgb(27, 138, 99);
   border-radius: 100px;
 }
+
+#myTab i{
+  display: none;
+}
