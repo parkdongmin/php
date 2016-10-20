@@ -1,0 +1,50 @@
+#logo{
+  width: 300px;
+  padding-top: 10px;
+  float: left;
+}
+
+.search{
+  padding-top: 60px;
+}
+.faq{
+  width: 400px;
+
+}
+.faq1{
+  width: 400px;
+  padding-top: 30px;
+    float: left;
+}
+#con{
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.get{
+  width: 400px;
+  padding-top: 30px;
+  margin-left: 20px;
+  float: left;
+}
+.getpb{
+  height: 250px;
+}
+.get2{
+  width: 300px;
+  padding-top: 30px;
+  margin-left: 840px;
+}
+.getpb2{
+  height: 250px;
+}
+.indexbtn{
+  margin-top: 50px;
+  margin-left: 280px;
+}
+a{
+  color: #000000;
+}
+body{
+  padding-top: 50px;
+}
