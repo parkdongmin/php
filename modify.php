@@ -1,3 +1,21 @@
+<?php
+$id = $_GET['id'];
+// $_POST['id'];
+
+/* Database 연결 */
+$host = 'mysql:host=localhost;dbname=test';
+$user = 'test';
+$password = '1234';
+$conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
+/* Data 조회를 위한 Query 작성 */
+$stmt = $conn->prepare('SELECT * FROM board where id='.$id);
+/* Query 실행 */
+$stmt->execute();
+/* 조회한 Data를 배열(Array) 형태로 모두 저장 */
+$item = $stmt->fetchAll();
+
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -116,36 +134,38 @@
       </div><!-- /.container-fluid -->
       </div>
       </nav>
-      <h1 class="top1"><strong>글쓰기</strong></h1>
+      <h1 class="top1"><strong>수정</strong></h1>
       <br><br><br>
       <hr id="hr1">
-
         <table class="table table-striped">
-          <form class="" action="./insert.php" method="get">
-          <thead>
-            <th>공지사항</th>
-            <th><input type="checkbox" id="notice" name="notice" placeholder="내용을 입력해주세요."></th>
-          </thead>
+          <form class="" action="./update.php" method="get">
           <thead>
             <th>작성자</th>
-            <th><input type="text" size="20" id="author" name="author" placeholder="이름을 입력해주세요."></th>
+            <th><input type="text" size="20" id="author" name="author" placeholder="이름을 입력해주세요." value="<?php echo $item[0]['author']?>"></th>
+          </thead>
+          <thead>
+            <th>작성일</th>
+            <th>
+                <p id="timestamp"><?php echo $item[0]['timestamp']?>
+                </p>
+            </th>
           </thead>
           <thead>
             <th>제목</th>
-            <th><input type="text" size="30" id="title" name="title" placeholder="제목을 입력해주세요."></th>
+            <th><input type="text" size="30" id="title" name="title" placeholder="제목을 입력해주세요." value="<?php echo $item[0]['title']?>"></th>
           </thead>
           <thead>
             <th>내용</th>
-            <th><textarea rows="4" cols="50" id="content" name="content" placeholder="내용을 입력해주세요."></textarea></th>
+            <th><textarea rows="4" cols="50" id="content" name="content" placeholder="내용을 입력해주세요."><?php echo $item[0]['content']?>
+            </textarea></th>
           </thead>
-
-
         </table>
+      <button type="submit" class="btn btn-default writebtn1">수정</button>
+      <button type="button" class="btn btn-default writebtn2" onclick="location.href='./list.php'">취소</button>
+      <input type="hidden" name="id" value="<?php echo $item[0]['id']?>">
 
-
-      <button type="submit" class="btn btn-default writebtn1">확인</button>
-      <button type="submit" class="btn btn-default writebtn2">취소</button>
       </form>
+
       </section>
       <br><br>
   </body>

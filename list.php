@@ -5,17 +5,25 @@ $user = 'test';
 $password = '1234';
 $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
+
 /* Data 조회를 위한 Query 작성 */
-$stmt = $conn->prepare('SELECT * FROM board');
+$stmt = $conn->prepare('SELECT * FROM board ORDER BY notice DESC, id DESC');
+
 /* Query 실행 */
 $stmt->execute();
 /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
 $list = $stmt->fetchAll();
 
+
 /* Foreach 반복문을 이용해 가져온 모든 데이터를 출력한다 */
 // foreach($list as $item) {
 //     echo $member['name']." / ".$member['year']." / ".$member['address']."<br>";
 // }
+//
+// 댓글
+
+
+
 ?>
 
 
@@ -146,7 +154,7 @@ $list = $stmt->fetchAll();
   <hr id="hr1">
   <table class="table table-striped">
     <thead>
-      <th>No.</th>
+      <th width="10%;">No.</th>
       <th>제목</th>
       <th>작성자</th>
       <th>작성일</th>
@@ -154,9 +162,31 @@ $list = $stmt->fetchAll();
     <tbody>
 
       <?php foreach($list as $item) { ?>
-        <tr>
-          <td><?php echo $item['id'] ?></td>
-          <td><a href="./listin.php?id=<?php echo $item['id']?>"><?php echo $item['title'] ?></a></td>
+
+        <?php if($item['notice'] > 0){ ?> <tr class="info"> <?php } else { ?>
+          <tr>
+      <?php } ?>
+          <td>
+          <?php if($item['notice'] > 0){ ?><span class="label label-info">공지</span><?php } else { ?>
+            <?php  echo $item['id'] ?>
+        <?php } ?>
+          </td>
+          <td>
+              <?php
+                $stmt = $conn->prepare('SELECT * FROM reply WHERE list_id='.$item['id']);
+                $stmt->execute();
+                $reply_count = $stmt->fetchAll();
+              ?>
+            <a href="./listin.php?id=<?php echo $item['id']?>"><?php echo $item['title'] ?></a>
+
+            <?php if (count($reply_count) > 0) : ?>
+              <span class="badge"><?php echo count($reply_count)?></span>
+            <?php endif; ?>
+
+              <?php if($item['notice'] > 0){ ?><span class="label label-danger">HOT</span><?php } else { ?>
+              <?php if(strtotime("now-24hour") < strtotime($item['timestamp'])){ ?><span class="label label-danger">NEW</span><?php } ?>
+          <?php } ?>
+          </td>
           <td><?php echo $item['author'] ?></td>
           <td><?php echo $item['timestamp'] ?></td>
         </tr>

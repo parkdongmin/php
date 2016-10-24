@@ -1,24 +1,29 @@
 <?php
 
-$id = $_GET['id'];
+    $list_id = $_GET['id'];
+    // $_POST['id'];
 
-/* Database 연결 */
-$host = 'mysql:host=localhost;dbname=test';
-$user = 'test';
-$password = '1234';
-$conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    /* Database 연결 */
+    $host = 'mysql:host=localhost;dbname=test';
+    $user = 'test';
+    $password = '1234';
+    $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
-/* Data 조회를 위한 Query 작성 */
-$stmt = $conn->prepare('SELECT * FROM board where id='.$id);
-/* Query 실행 */
-$stmt->execute();
-/* 조회한 Data를 배열(Array) 형태로 모두 저장 */
-$item = $stmt->fetchAll();
+    /* Data 조회를 위한 Query 작성 */
+    $stmt = $conn->prepare('SELECT * FROM board where id='.$list_id);
+    /* Query 실행 */
+    $stmt->execute();
+    /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
+    $item = $stmt->fetchAll();
 
-/* Foreach 반복문을 이용해 가져온 모든 데이터를 출력한다 */
-// foreach($list as $item) {
-//     echo $member['name']." / ".$member['year']." / ".$member['address']."<br>";
-// }
+    /* Data 조회를 위한 Query 작성 */
+    $stmt_reply = $conn->prepare('SELECT * FROM reply WHERE list_id='.$list_id.' ORDER BY id DESC');
+    /* Query 실행 */
+    $stmt_reply->execute();
+    /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
+    $reply_list = $stmt_reply->fetchAll();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -148,6 +153,7 @@ $item = $stmt->fetchAll();
     <button type="button" class="btn btn-default btn-md listinbtn2" data-toggle="modal" data-target="#myModal">
       삭제
     </button>
+    <a href="./modify.php?id=<?php echo $item[0]['id']?>">  <button type="submit" class="btn btn-default listinbtn3">수정</button></a>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -155,14 +161,17 @@ $item = $stmt->fetchAll();
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">삭제</h4>
+            <h4 class="modal-title" id="myModalLabel">게시물 삭제</h4>
           </div>
           <div class="modal-body">
             정말 삭제하시겠습니까?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-primary">삭제</button>
+            <form class="" action="./delete.php" method="get">
+              <input type="hidden" name="id" value="<?php echo $item[0]['id']?>"
+              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">삭제</button>
+            </form>
           </div>
         </div>
       </div>
@@ -177,24 +186,80 @@ $item = $stmt->fetchAll();
       <tbody>
         <td>작성자 : <?php echo $item[0]['author']?></td>
         <td>작성일 : <?php echo $item[0]['timestamp']?></td>
-        <td>이름 : 박동민</td>
       </tbody>
       <tbody>
         <td colspan="4"><Br><br><Br><br><p style="font-size:20px;">
         <?php echo $item[0]['content']?>
         </p><Br><br><Br><br></td>
-
       </tbody>
-
-
-
     </table>
     <br>
-
-
     </article>
-
   </section>
+
+  <section class="container">
+    <form id="insert_reply" action="./insert_reply.php" method="get">
+    <h3><i class="fa fa-bell" aria-hidden="true"></i> 댓글(Reply)</h3>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+        <!-- 댓글 작성자 -->
+        <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">작성자</span>
+        <input type="text" class="form-control" placeholder="이름을 입력해주세요." aria-describedby="basic-addon1" name="reply_author">
+      </div>
+        </div>
+        <div class="col-sm-7">
+        <!-- 댓글 내용 -->
+        <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">댓글</span>
+        <input type="text" class="form-control" placeholder="댓글을 입력해주세요." aria-describedby="basic-addon1" name="reply_content">
+        </div>
+        </div>
+        <div class="col-sm-0">
+        <!-- 확인 버튼 -->
+        <button type="submit" class="btn btn-info"><i class="fa fa-paper-plane" aria-hidden="true"></i> 전송</button>
+        </div>
+    </div>
+<br><Br>
+  <input type="hidden" name="board_id" value="<?php echo $item[0]['id']?>">
+  </form>
+  <hr>
+  </section>
+
+    <section class="container" style="padding-bottom:50px;">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th width="15%">작성자 <i class="fa fa-sort-desc" aria-hidden="true"></i></th>
+            <th width="70%">내용 <i class="fa fa-sort-desc" aria-hidden="true"></i></th>
+            <th width="30%" style=" text-align:right;">작성일 <i class="fa fa-sort-desc" aria-hidden="true"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (count($reply_list) > 0) { ?>
+          <?php foreach($reply_list as $reply_item) { ?>
+          <tr>
+
+            <td>
+              작성자 : <?php echo $reply_item['author'] ?></td>
+            <td>내용 : <?php echo $reply_item['content'] ?> 
+              <?php if(strtotime("now-24hour") < strtotime($reply_item['timestamp'])){ ?><span class="label label-danger">NEW</span><?php } ?>
+            </td>
+            <td style="text-align:right;">작성일 : <?php echo $reply_item['timestamp'] ?></td>
+          </tr>
+        </tbody>
+      <?php } ?>
+      <?php } else { ?>
+              <tr>
+                <td colspan="3" class="text-center">
+                  등록된 댓글이 없습니다.
+                </td>
+              </tr>
+        <?php } ?>
+        </table>
+
+    </section>
 
   </body>
 

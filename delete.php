@@ -1,3 +1,18 @@
+<?php
+
+$id = $_GET['id'];
+
+/* Database 연결 */
+$host = 'mysql:host=localhost;dbname=test';
+$user = 'test';
+$password = '1234';
+$conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
+/* Data 조회를 위한 Query 작성 */
+$stmt = $conn->prepare('DELETE FROM board WHERE id='.$id);
+/* Query 실행 */
+$stmt->execute();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -116,35 +131,11 @@
       </div><!-- /.container-fluid -->
       </div>
       </nav>
-      <h1 class="top1"><strong>글쓰기</strong></h1>
+      <h1 class="top1"><strong>성공적으로 삭제되었습니다.</strong></h1>
       <br><br><br>
       <hr id="hr1">
+      <button type="button" class="btn btn-default listinbtn" onclick="location.href='./list.php'">목록으로 돌아가기</button>
 
-        <table class="table table-striped">
-          <form class="" action="./insert.php" method="get">
-          <thead>
-            <th>공지사항</th>
-            <th><input type="checkbox" id="notice" name="notice" placeholder="내용을 입력해주세요."></th>
-          </thead>
-          <thead>
-            <th>작성자</th>
-            <th><input type="text" size="20" id="author" name="author" placeholder="이름을 입력해주세요."></th>
-          </thead>
-          <thead>
-            <th>제목</th>
-            <th><input type="text" size="30" id="title" name="title" placeholder="제목을 입력해주세요."></th>
-          </thead>
-          <thead>
-            <th>내용</th>
-            <th><textarea rows="4" cols="50" id="content" name="content" placeholder="내용을 입력해주세요."></textarea></th>
-          </thead>
-
-
-        </table>
-
-
-      <button type="submit" class="btn btn-default writebtn1">확인</button>
-      <button type="submit" class="btn btn-default writebtn2">취소</button>
       </form>
       </section>
       <br><br>

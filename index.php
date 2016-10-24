@@ -15,7 +15,7 @@
 
         <form class="navbar-form navbar-left search" role="search">
        <div class="form-group">
-         <input type="text" class="form-control" placeholder="단어를 입력해주세요.">
+         <input type="text" class="form-control" placeholder="검색어를 입력해주세요.">
        </div>
        <button type="submit" class="btn btn-default">검색</button>
      </form>
@@ -148,7 +148,7 @@
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <a href="./listin.php">대구 낚시를 할 때에 팁이있나요??</a> <span class="label label-primary">NEW</span>
+          대구 낚시를 할 때에 팁이있나요??<span class="label label-primary">NEW</span>
         </a>
       </h4>
     </div>
@@ -222,7 +222,7 @@
         <hr>
         <p>방어가 잘잡히는 시간때는 언제인가요??</p>
         <hr>
-        <p><a href="./listin.php">대구 낚시를 할 때에 팁이있나요??</a></p>
+        <p>대구 낚시를 할 때에 팁이있나요??</p>
         <hr>
         <p>Southledge에 방문해주셔서 감사합니다</p>
       </div>
