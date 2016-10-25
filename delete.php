@@ -2,11 +2,7 @@
 
 $id = $_GET['id'];
 
-/* Database 연결 */
-$host = 'mysql:host=localhost;dbname=test';
-$user = 'test';
-$password = '1234';
-$conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+include './database.php';
 
 /* Data 조회를 위한 Query 작성 */
 $stmt = $conn->prepare('DELETE FROM board WHERE id='.$id);

@@ -48,3 +48,13 @@ a{
 body{
   padding-top: 50px;
 }
+.log{
+  padding-top: 13px;
+  padding-left: 50px;
+}
+span{
+  color: #ffffff;
+}
+#login_form{
+  color: #000000;
+}

@@ -75,6 +75,28 @@
           </ul>
         </li>
       </ul>
+      <ul class="nav navbar-nav">
+        <form class="" method="post">
+          <li class="log">
+            <span id="login_form">
+            <input type="text" value="" placeholder="ID" name="loginid" id="loginid">
+            <input type="password" value="" placeholder="PW" name="loginpw" id="loginpw">
+            <a href="#" id="submit" class="btn btn-default btn-sm goin" style="height:28px;">로그인</a>
+            <a href="#" class="btn btn-success btn-sm" style="height:28px;">회원가입</a>
+            </span>
+            <div id="user_info" class="hide">
+              <span>ID : <span id="user_id"><span></span></span>
+              <span>권한 : <span id="user_role"><span></span></span>
+              <span>등록일 : <span id="user_timestamp"><span></span></span>
+                <a href="./logout.php" class="btn btn-default btn-sm goin" style="height:28px;">로그아웃</a>
+            </div>
+              <span class="error_msg hide">일치하는 회원정보가 없습니다.</span>
+            </ul>
+          </li>
+        </form>
+
+      </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </div>
@@ -237,4 +259,5 @@
 
   <script src="./lib/jquery-3.1.1.min.js"></script>
   <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./js/login.js"></script>
 </html>

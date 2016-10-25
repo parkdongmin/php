@@ -1,5 +1,7 @@
 <?php
 
+include './database.php';
+
 $title = $_GET['title'];
 $author = $_GET['author'];
 $content = $_GET['content'];
@@ -11,13 +13,6 @@ if( $notice == 'on') {
 } else{
   $notice = 0;
 }
-
-
-/* Database 연결 */
-$host = 'mysql:host=localhost;dbname=test';
-$user = 'test';
-$password = '1234';
-$conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
 /* Data 조회를 위한 Query 작성 */
 $stmt = $conn->prepare("INSERT INTO board (title,content,author,notice) VALUES ('$title', '$content', '$author', '$notice')");

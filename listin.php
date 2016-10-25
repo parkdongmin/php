@@ -1,13 +1,10 @@
 <?php
+include './database.php';
 
     $list_id = $_GET['id'];
     // $_POST['id'];
 
-    /* Database 연결 */
-    $host = 'mysql:host=localhost;dbname=test';
-    $user = 'test';
-    $password = '1234';
-    $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
 
     /* Data 조회를 위한 Query 작성 */
     $stmt = $conn->prepare('SELECT * FROM board where id='.$list_id);
@@ -243,7 +240,7 @@
 
             <td>
               작성자 : <?php echo $reply_item['author'] ?></td>
-            <td>내용 : <?php echo $reply_item['content'] ?> 
+            <td>내용 : <?php echo $reply_item['content'] ?>
               <?php if(strtotime("now-24hour") < strtotime($reply_item['timestamp'])){ ?><span class="label label-danger">NEW</span><?php } ?>
             </td>
             <td style="text-align:right;">작성일 : <?php echo $reply_item['timestamp'] ?></td>
