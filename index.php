@@ -82,13 +82,13 @@
             <input type="text" value="" placeholder="ID" name="loginid" id="loginid">
             <input type="password" value="" placeholder="PW" name="loginpw" id="loginpw">
             <a href="#" id="submit" class="btn btn-default btn-sm goin" style="height:28px;">로그인</a>
-            <a href="#" class="btn btn-success btn-sm" style="height:28px;">회원가입</a>
+            <a href="./signup.php" class="btn btn-success btn-sm" style="height:28px;">회원가입</a>
             </span>
             <div id="user_info" class="hide">
-              <span>ID : <span id="user_id"><span></span></span>
-              <span>권한 : <span id="user_role"><span></span></span>
-              <span>등록일 : <span id="user_timestamp"><span></span></span>
-                <a href="./logout.php" class="btn btn-default btn-sm goin" style="height:28px;">로그아웃</a>
+              <span style="margin-left:230px;">환영합니다 <span id="user_id"><span> </span></span> 님 /
+              <span>등급 : <span id="user_role"><span></span></span>
+              <!-- <span>등록일 : <span id="user_timestamp"><span></span></span> -->
+                <a href="./logout.php" class="btn btn-info btn-sm goin" style="height:20px; padding-top:1px;"><p style="font-size:11px;">로그아웃</p></a>
             </div>
               <span class="error_msg hide">일치하는 회원정보가 없습니다.</span>
             </ul>
@@ -220,7 +220,7 @@
   <section class="get">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">인사말 <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span></h3>
+        <h3 class="panel-title">인사말 <span class="glyphicon glyphicon-bullhorn" aria-hidden="true" style="color:#000000;"></span></h3>
 
       </div>
       <div class="panel-body getpb">

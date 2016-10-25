@@ -145,12 +145,16 @@ include './database.php';
   <section class="container">
 
     <h1 class="top1"><strong>게시판</strong></h1>
-    <button type="button" class="btn btn-default listinbtn" onclick="location.href='./list.php'">목록</button>
+    <button type="button" class="btn btn-default listinbtn" onclick="location.href='./list.php'">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+      목록</button>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-default btn-md listinbtn2" data-toggle="modal" data-target="#myModal">
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
       삭제
     </button>
-    <a href="./modify.php?id=<?php echo $item[0]['id']?>">  <button type="submit" class="btn btn-default listinbtn3">수정</button></a>
+    <a href="./modify.php?id=<?php echo $item[0]['id']?>">  <button type="submit" class="btn btn-default listinbtn3">
+      <i class="fa fa-eraser" aria-hidden="true"></i>수정</button></a>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

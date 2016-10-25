@@ -1,9 +1,25 @@
 $(document).ready(function(){
+  var userinfo = {};
+  $.ajax({
+    url: 'login_check.php',
+    dataType : 'json'
+  }).done(function(response){
+    userinfo = response;
+    if(userinfo.is_logged){
 
+      $('#user_id').html(userinfo.user_id);
+      $('#user_role').html(userinfo.role);
+      $('#user_timestamp').html(userinfo.timestamp);
+
+      $('#user_info').removeClass('hide');
+      $('#login_form').addClass('hide');
+      $('.log .error_msg').addClass('hide');
+    }
+  });
 
     $('#submit').on('click', function(){
       $.ajax({
-        url : './login.php',
+        url : 'login.php',
         method : 'POST',
         data : {
           loginid : $('#loginid').val(),

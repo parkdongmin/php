@@ -1,3 +1,7 @@
+<?php
+  session_start();
+  $is_logged = $_SESSION['is_logged'];
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -112,6 +116,16 @@
               </ul>
             </li>
           </ul>
+
+          <ul class="nav navbar-nav" style="padding-top:15px;">
+            <?php if($is_logged && $_SESSION['role'] == 0) { ?>
+              <span class="label label-danger" style="margin-left:450px;">관리자</span> <span><?php echo $_SESSION['user_id'] ?> 님</span>
+            <?php } elseif($is_logged && $_SESSION['role'] == 9) { ?>
+              <span class="label label-warning" style="margin-left:450px;">일반</span> <span><?php echo $_SESSION['user_id'] ?> 님</span>
+              <?php } ?>
+              </li>
+          </ul>
+
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
       </div>
@@ -123,8 +137,10 @@
         <table class="table table-striped">
           <form class="" action="./insert.php" method="get">
           <thead>
+            <?php if($is_logged && $_SESSION['role'] == 0) : ?>
             <th>공지사항</th>
-            <th><input type="checkbox" id="notice" name="notice" placeholder="내용을 입력해주세요."></th>
+            <th><input type="checkbox" id="notice" name="notice" ></th>
+          <?php endif; ?>
           </thead>
           <thead>
             <th>작성자</th>
@@ -149,4 +165,7 @@
       </section>
       <br><br>
   </body>
+  <script src="./lib/jquery-3.1.1.min.js"></script>
+  <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./js/notice.js"></script>
 </html>

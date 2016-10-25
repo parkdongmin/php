@@ -144,7 +144,9 @@ $list = $stmt->fetchAll();
 <section class="container">
 
   <h1 class="top1"><strong>게시판</strong></h1>
-  <button type="button" class="btn btn-default listbtn" onclick="location.href='./listwrite.php'">글쓰기</button>
+  <button type="button" class="btn btn-default listbtn" onclick="location.href='./listwrite.php'">
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    글쓰기</button>
   <br>
   <hr id="hr1">
   <table class="table table-striped">
