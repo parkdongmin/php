@@ -1,6 +1,9 @@
 <?php
 include './database.php';
 
+  session_start();
+  $is_logged = $_SESSION['is_logged'];
+
 /* Data 조회를 위한 Query 작성 */
 $stmt = $conn->prepare('SELECT * FROM board ORDER BY notice DESC, id DESC');
 
@@ -9,15 +12,20 @@ $stmt->execute();
 /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
 $list = $stmt->fetchAll();
 
+//username
+/* Data 조회를 위한 Query 작성 */
+$user = $conn->prepare('SELECT * FROM user');
+
+/* Query 실행 */
+$user->execute();
+/* 조회한 Data를 배열(Array) 형태로 모두 저장 */
+$user_name = $user->fetchAll();
+
 
 /* Foreach 반복문을 이용해 가져온 모든 데이터를 출력한다 */
 // foreach($list as $item) {
 //     echo $member['name']." / ".$member['year']." / ".$member['address']."<br>";
 // }
-//
-// 댓글
-
-
 
 ?>
 
@@ -100,7 +108,7 @@ $list = $stmt->fetchAll();
       <li style="background-color:rgb(39, 34, 60);"><a href="./index.php" style="color:#ffffff;">홈<span class="sr-only">(current)</span></a></li>
       <ul class="nav navbar-nav">
         <li style="background-color:rgb(39, 34, 60);"><a href="./inr.php" style="color:#ffffff;">인사말<span class="sr-only">(current)</span></a></li>
-        <li style="background-color:rgb(39, 34, 60);"><a href="./list.php" style="color:#ffffff;">게시판<span class="sr-only">(current)</span></a></li>
+        <li style="background-color:rgb(39, 34, 60);" class="active"><a href="./list.php" style="color:#ffffff;">게시판<span class="sr-only">(current)</span></a></li>
 
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#ffffff;">바다용품<span class="caret"></span></a>
@@ -144,9 +152,14 @@ $list = $stmt->fetchAll();
 <section class="container">
 
   <h1 class="top1"><strong>게시판</strong></h1>
-  <button type="button" class="btn btn-default listbtn" onclick="location.href='./listwrite.php'">
-    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    글쓰기</button>
+
+  <?php if($is_logged && $_SESSION['role'] == 0 || $is_logged && $_SESSION['role'] == 9) { ?>
+    <button type="button" class="btn btn-default listbtn" onclick="location.href='./listwrite.php'">
+      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      글쓰기</button>
+    <?php } else{ ?>
+<br>  <br>
+      <?php } ?>
   <br>
   <hr id="hr1">
   <table class="table table-striped">
@@ -159,6 +172,7 @@ $list = $stmt->fetchAll();
     <tbody>
 
       <?php foreach($list as $item) { ?>
+
 
         <?php if($item['notice'] > 0){ ?> <tr class="info"> <?php } else { ?>
           <tr>
@@ -174,8 +188,11 @@ $list = $stmt->fetchAll();
                 $stmt->execute();
                 $reply_count = $stmt->fetchAll();
               ?>
-            <a href="./listin.php?id=<?php echo $item['id']?>"><?php echo $item['title'] ?></a>
-
+            <?php if($is_logged && $_SESSION['role'] == 0 || $is_logged && $_SESSION['role'] == 9) { ?>
+              <a href="./listin?id=<?php echo $item['id']?>"><?php echo $item['title'] ?></a>
+            <?php } else{ ?>
+              <a href="./listin?id=<?php echo $item['id']?>"><?php echo $item['title'] ?></a>
+              <?php } ?>
             <?php if (count($reply_count) > 0) : ?>
               <span class="badge"><?php echo count($reply_count)?></span>
             <?php endif; ?>
@@ -184,10 +201,11 @@ $list = $stmt->fetchAll();
               <?php if(strtotime("now-24hour") < strtotime($item['timestamp'])){ ?><span class="label label-danger">NEW</span><?php } ?>
           <?php } ?>
           </td>
-          <td><?php echo $item['author'] ?></td>
+          <td><?php echo $item['user_id'] ?></td>
           <td><?php echo $item['timestamp'] ?></td>
         </tr>
       <?php } ?>
+
 
     </tbody>
 

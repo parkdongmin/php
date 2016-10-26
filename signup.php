@@ -176,12 +176,12 @@
         <th><input type="text" size="30" id="password_check" name="passwordcheck" placeholder="비밀번호 다시 입력해주세요." class="form-control" style="width:210px;"></th>
       </thead>
       <thead>
-      <th>
-        <p class="help-block" id="check_msg"></p>
+      <th width="19%;">
+        <p class="help-block" id="check_msg" style="color:rgb(255, 0, 0);"></p>
       </th>
     </thead>
     </table>
-    <button type="submit" id="okay" name="button">확인</button>
+    <button type="submit" id="okay" name="button" class="btn btn-success btn-sm">확인</button>
   <!-- <a href="#" class="btn btn-danger writebtn1 disabled" id="okay" style="margin-left:530px;">확인</a> -->
   </form>
   </section>

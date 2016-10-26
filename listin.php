@@ -1,10 +1,11 @@
 <?php
 include './database.php';
 
+session_start();
+$is_logged = $_SESSION['is_logged'];
+
     $list_id = $_GET['id'];
     // $_POST['id'];
-
-
 
     /* Data 조회를 위한 Query 작성 */
     $stmt = $conn->prepare('SELECT * FROM board where id='.$list_id);
@@ -149,13 +150,19 @@ include './database.php';
       <i class="fa fa-bars" aria-hidden="true"></i>
       목록</button>
     <!-- Button trigger modal -->
+    <?php if($is_logged && $_SESSION['user_id'] == $item[0]['user_id'] || $is_logged && $_SESSION['user_id'] == 'admin') { ?>
     <button type="button" class="btn btn-default btn-md listinbtn2" data-toggle="modal" data-target="#myModal">
       <i class="fa fa-trash-o" aria-hidden="true"></i>
       삭제
     </button>
+    <?php } else{ ?>
+      <?php } ?>
+    <?php if($is_logged && $_SESSION['user_id'] == $item[0]['user_id'] || $is_logged && $_SESSION['user_id'] == 'admin') { ?>
     <a href="./modify.php?id=<?php echo $item[0]['id']?>">  <button type="submit" class="btn btn-default listinbtn3">
-      <i class="fa fa-eraser" aria-hidden="true"></i>수정</button></a>
+    <i class="fa fa-eraser" aria-hidden="true"></i>수정</button></a>
+<?php } else{ ?>
 
+  <?php } ?>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -168,11 +175,13 @@ include './database.php';
             정말 삭제하시겠습니까?
           </div>
           <div class="modal-footer">
+
             <form class="" action="./delete.php" method="get">
-              <input type="hidden" name="id" value="<?php echo $item[0]['id']?>"
+              <input type="hidden" name="id" value="<?php echo $item[0]['id'] ?>"</input>
               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             <button type="submit" class="btn btn-primary">삭제</button>
             </form>
+
           </div>
         </div>
       </div>
@@ -185,7 +194,7 @@ include './database.php';
         <th>제목 : <?php echo $item[0]['title']?></th>
       </thead>
       <tbody>
-        <td>작성자 : <?php echo $item[0]['author']?></td>
+        <td>작성자 : <?php echo $item[0]['user_id']?></td>
         <td>작성일 : <?php echo $item[0]['timestamp']?></td>
       </tbody>
       <tbody>
@@ -205,9 +214,10 @@ include './database.php';
     <div class="row">
         <div class="col-sm-3">
         <!-- 댓글 작성자 -->
+        <?php if($is_logged && $_SESSION['role'] == 0 || $is_logged && $_SESSION['role'] == 9) { ?>
         <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">작성자</span>
-        <input type="text" class="form-control" placeholder="이름을 입력해주세요." aria-describedby="basic-addon1" name="reply_author">
+        <input type="text" class="form-control" placeholder="<?php echo $_SESSION['user_id'] ?>" aria-describedby="basic-addon1" name="reply_author" disabled>
       </div>
         </div>
         <div class="col-sm-7">
@@ -220,6 +230,23 @@ include './database.php';
         <div class="col-sm-0">
         <!-- 확인 버튼 -->
         <button type="submit" class="btn btn-info"><i class="fa fa-paper-plane" aria-hidden="true"></i> 전송</button>
+        <?php }else{ ?>
+          <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">작성자</span>
+          <input type="text" class="form-control" placeholder="이름을 입력해주세요." aria-describedby="basic-addon1" name="reply_author" disabled>
+        </div>
+          </div>
+          <div class="col-sm-7">
+          <!-- 댓글 내용 -->
+          <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">댓글</span>
+          <input type="text" class="form-control" placeholder="댓글을 입력해주세요." aria-describedby="basic-addon1" name="reply_content" disabled>
+          </div>
+          </div>
+          <div class="col-sm-0">
+          <!-- 확인 버튼 -->
+        <button type="submit" class="btn btn-info disabled"><i class="fa fa-paper-plane" aria-hidden="true"></i> 전송</button>
+          <?php } ?>
         </div>
     </div>
 <br><Br>
@@ -241,7 +268,6 @@ include './database.php';
           <?php if (count($reply_list) > 0) { ?>
           <?php foreach($reply_list as $reply_item) { ?>
           <tr>
-
             <td>
               작성자 : <?php echo $reply_item['author'] ?></td>
             <td>내용 : <?php echo $reply_item['content'] ?>
@@ -266,5 +292,5 @@ include './database.php';
 
   <script src="./lib/jquery-3.1.1.min.js"></script>
   <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./js/listin.js"></script>
+  <script src="./js/listin.js"></script>
 </html>

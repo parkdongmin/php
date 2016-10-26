@@ -158,7 +158,6 @@
 
         </table>
 
-
       <button type="submit" class="btn btn-default writebtn1">확인</button>
       <button type="submit" class="btn btn-default writebtn2">취소</button>
       </form>

@@ -3,7 +3,7 @@
 include './database.php';
 
 $title = $_GET['title'];
-$author = $_GET['author'];
+$user_id = $_GET['author'];
 $content = $_GET['content'];
 $notice = (isset($_GET['notice'])) ? $_GET['notice'] : '';
 
@@ -15,7 +15,7 @@ if( $notice == 'on') {
 }
 
 /* Data 조회를 위한 Query 작성 */
-$stmt = $conn->prepare("INSERT INTO board (title,content,author,notice) VALUES ('$title', '$content', '$author', '$notice')");
+$stmt = $conn->prepare("INSERT INTO board (title,content,user_id,notice) VALUES ('$title', '$content', '$user_id', '$notice')");
 /* Query 실행 */
 $stmt->execute();
 ?>

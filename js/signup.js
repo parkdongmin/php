@@ -10,7 +10,7 @@ if(id && password){
   $('#password_check').on('keyup',function(){
     if($('#password').val() == $(this).val()){
       $('#okay').removeClass('disabled');
-      $('#check_msg').html('비밀번호가 확인되었습니다');
+      $('#check_msg').html('가입가능');
       $('#check_msg').removeClass('text-danger');
       if(!$('#check_msg').hasClass('text-success')){
       $('#check_msg').addClass('text-success');
